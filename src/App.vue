@@ -1,28 +1,56 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Products @update:product="product = $event" />
+    <Modal @update:product="handleUpdateProduct" :product="product" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Products from './components/Products.vue';
+import Modal from './components/Modal.vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
+  data() {
+    return {
+      product: null
+    }
+  },
+  methods: {
+    ...mapActions(['getCart']),
+    handleUpdateProduct(){
+      this.product = null;
+    }
+  },
+  created(){
+    this.getCart()
+  },
   components: {
-    HelloWorld
+    Products,
+    Modal
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body,h1,h2,h3,ul,li,span,p,a {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+}
+
 </style>
